@@ -1,0 +1,46 @@
+.posts {
+	margin-top: 10px;
+}
+
+.addPost {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.newPost {
+	resize: unset;
+	border: none;
+	outline: none;
+	background: transparent;
+	border-bottom: 2px solid #c5ecfd;
+	padding: 5px;
+	font-size: 16px;
+	width: 90%;
+}
+
+.button {
+	padding: 10px;
+	border-radius: 50%;
+	border: none;
+	outline: none;
+	background: transparent;
+	border: 1px solid #c5ecfd;
+	cursor: pointer;
+}
+
+.button img {
+	width: 30px;
+	height: 30px;
+}
+
+.wrapper {
+	border-radius: 50%;
+	padding: 20px;
+	cursor: pointer;
+}
+
+.wrapper:hover {
+	background: rgba(0, 0, 0, 0.05);
+}

@@ -1,25 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
+import Header from './components/Header/Header';
+import Aside from './components/Aside/Aside';
+import Profile from './components/Profile/Profile';
+import { Route } from 'react-router-dom';
+import Chats from './components/Chats/Chats';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function App(props) {
+	return (
+		<div className='App'>
+			<Header />
+			<Aside />
+			<Route path='/chats'>
+				<Chats store={props.store} />
+			</Route>
+			<Route path='/profile'>
+				<Profile store={props.store} />
+			</Route>
+			<Route exact path='/'>
+				<Profile store={props.store} />
+			</Route>
+		</div>
+	);
 }
 
 export default App;

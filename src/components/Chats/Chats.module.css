@@ -1,0 +1,62 @@
+.chats {
+	grid-area: main;
+	display: grid;
+	grid-template-columns: 200px 1fr;
+	grid-template-rows: 1fr min-content;
+	grid-template-areas:
+		'users chat'
+		'users addMessage';
+	border: 1px solid #e6e6e6;
+	border-collapse: collapse;
+	margin: 0 5px;
+}
+
+.users {
+	grid-area: users;
+	border-collapse: collapse;
+}
+
+.chat {
+	grid-area: chat;
+	padding: 20px;
+	border: 1px solid #e6e6e6;
+}
+
+.addMessage {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	grid-area: addMessage;
+	padding: 5px;
+	border: 1px solid #e6e6e6;
+}
+
+.newMessage {
+	resize: unset;
+	border: none;
+	outline: none;
+	background: transparent;
+	border-bottom: 2px solid #c5ecfd;
+	padding: 5px;
+	font-size: 16px;
+	width: 90%;
+}
+
+.button {
+	padding: 10px;
+	border-radius: 50%;
+	border: none;
+	outline: none;
+	background: transparent;
+	border: 1px solid #c5ecfd;
+	cursor: pointer;
+}
+
+.button:hover {
+	background: rgba(0, 0, 0, 0.05);
+}
+
+.button img {
+	width: 30px;
+	height: 30px;
+}

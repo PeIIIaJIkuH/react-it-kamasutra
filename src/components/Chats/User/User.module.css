@@ -1,0 +1,30 @@
+.user {
+	display: block;
+	text-decoration: none;
+	display: flex;
+	align-items: center;
+	padding: 5px;
+	color: black;
+	border: 1px solid #e6e6e6;
+	border-collapse: collapse;
+}
+
+.user:hover {
+	background: #a6e2d8;
+}
+
+.user.active {
+	background: #00b594;
+	color: white;
+}
+
+.user img {
+	width: 50px;
+	height: 50px;
+	object-fit: cover;
+	border-radius: 50%;
+	margin-right: 10px;
+}
+
+.user span {
+}

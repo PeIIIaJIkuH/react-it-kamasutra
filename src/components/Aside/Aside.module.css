@@ -1,0 +1,35 @@
+.aside {
+	grid-area: aside;
+}
+
+.navlink {
+	display: block;
+	padding: 5px 15px;
+	border-radius: 5px;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.navlink:hover {
+	background: rgba(0, 0, 0, 0.05);
+}
+
+.navlink.active {
+	background: rgba(0, 0, 0, 0.1);
+}
+
+.navlink img {
+	width: 15px;
+	height: 15px;
+	object-fit: contain;
+	margin-right: 5px;
+}
+
+.navlink span {
+	color: #009e81;
+	font-weight: 500;
+}
+
+.navlink:hover span {
+	color: #00b594;
+}
