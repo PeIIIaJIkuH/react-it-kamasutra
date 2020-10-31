@@ -1,17 +1,13 @@
 import React from 'react';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
-import Posts from './Posts/Posts';
 import s from './Profile.module.css';
+import PostsContainer from './Posts/PostsContainer';
 
 const Profile = props => {
 	return (
 		<main className={s.profile}>
-			<ProfileInfo info={props.store.getState().profileReducer.info} />
-			<Posts
-				store={props.store}
-				profileReducer={props.store.getState().profileReducer}
-				dispatch={props.dispatch}
-			/>
+			<ProfileInfo />
+			<PostsContainer />
 		</main>
 	);
 };

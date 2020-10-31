@@ -2,6 +2,12 @@ import React from 'react';
 import s from './ProfileInfo.module.css';
 
 function ProfileInfo(props) {
+	const info = [
+		'Date of birth: 23 February',
+		'City: Pavlodar',
+		'Education: NU',
+		'Website: fnfn.net'
+	];
 	return (
 		<div className={s.profileInfo}>
 			<img
@@ -16,7 +22,7 @@ function ProfileInfo(props) {
 			/>
 			<h2 className="name">PeIIIaJIkuH</h2>
 			<div className={s.info}>
-				{props.info.map(el =>
+				{info.map(el =>
 					<div className="item">
 						{el}
 					</div>

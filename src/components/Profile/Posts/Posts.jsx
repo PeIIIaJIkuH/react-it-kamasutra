@@ -1,23 +1,17 @@
 import React from 'react';
-import {
-	addPostCreator,
-	updateNewPostCreator
-} from '../../../redux/profile-reducer';
 import Post from './Post/Post';
 import s from './Posts.module.css';
 
 function Posts(props) {
-	debugger;
-	let textarea = React.createRef();
+	const posts = props.profileReducer.posts.map(el => <Post text={el.text} />);
 
-	const addPost = () => {
-		let text = textarea.current.value;
-		if (text) props.store.dispatch(addPostCreator());
+	const onAddPost = () => {
+		if (props.profileReducer.newPost) props.addPost();
 	};
 
-	const updateNewPost = () => {
-		let text = textarea.current.value;
-		props.store.dispatch(updateNewPostCreator(text));
+	const onUpdateNewPost = e => {
+		const text = e.target.value;
+		props.updateNewPost(text);
 	};
 
 	return (
@@ -26,13 +20,12 @@ function Posts(props) {
 			<div className={s.addPost}>
 				<textarea
 					className={s.newPost}
-					ref={textarea}
 					name="newPost"
-					value={props.store.getState().profileReducer.newPost}
-					onChange={updateNewPost}
+					value={props.profileReducer.newPost}
+					onChange={onUpdateNewPost}
 				/>
 				<div className={s.wrapper}>
-					<button className={s.button} onClick={addPost}>
+					<button className={s.button} onClick={onAddPost}>
 						<img
 							src="https://www.flaticon.com/svg/static/icons/svg/1828/1828819.svg"
 							alt="add"
@@ -41,9 +34,7 @@ function Posts(props) {
 				</div>
 			</div>
 			<div className="postItems">
-				{props.store
-					.getState()
-					.profileReducer.posts.map(el => <Post text={el.text} />)}
+				{posts}
 			</div>
 		</div>
 	);

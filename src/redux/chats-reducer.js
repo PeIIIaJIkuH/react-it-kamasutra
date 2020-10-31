@@ -53,12 +53,13 @@ let initialState = {
 const chatsReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case SEND_MESSAGE:
-			state.messages.push(state.newMessage);
-			state.newMessage = '';
-			return state;
+			return {
+				...state,
+				messages: [...state.messages, state.newMessage],
+				newMessage: ''
+			};
 		case UPDATE_NEW_MESSAGE:
-			state.newMessage = action.text;
-			return state;
+			return { ...state, newMessage: action.text };
 		default:
 			return state;
 	}

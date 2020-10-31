@@ -2,9 +2,16 @@
 	display: flex;
 	align-items: center;
 	padding: 5px;
+	border-radius: 10px;
+	background: white;
+}
+
+.post {
+	margin-bottom: 20px;
 }
 
 .post img {
+	align-self: start;
 	width: 30px;
 	height: 30px;
 	object-fit: cover;

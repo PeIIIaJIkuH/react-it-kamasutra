@@ -3,7 +3,7 @@ import Header from './components/Header/Header';
 import Aside from './components/Aside/Aside';
 import Profile from './components/Profile/Profile';
 import { Route } from 'react-router-dom';
-import Chats from './components/Chats/Chats';
+import ChatsContainer from './components/Chats/ChatsContainer';
 
 function App(props) {
 	return (
@@ -11,13 +11,13 @@ function App(props) {
 			<Header />
 			<Aside />
 			<Route path='/chats'>
-				<Chats store={props.store} />
+				<ChatsContainer />
 			</Route>
 			<Route path='/profile'>
-				<Profile store={props.store} />
+				<Profile />
 			</Route>
 			<Route exact path='/'>
-				<Profile store={props.store} />
+				<Profile />
 			</Route>
 		</div>
 	);

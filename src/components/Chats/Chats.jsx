@@ -2,29 +2,23 @@ import React from 'react';
 import Message from './Message/Message';
 import User from './User/User';
 import s from './Chats.module.css';
-import {
-	sendMessageCreator,
-	updateNewMessageCreator
-} from '../../redux/chats-reducer';
 
 function Chats(props) {
-	const chatsReducer = props.store.getState().chatsReducer;
-
-	debugger;
-
-	const users = chatsReducer.chats.map(el =>
+	const users = props.chatsReducer.chats.map(el =>
 		<User name={el.name} id={el.id} src={el.src} />
 	);
-	const messages = chatsReducer.messages.map(el => <Message text={el} />);
+	const messages = props.chatsReducer.messages.map(el =>
+		<Message text={el} />
+	);
+	const newMessage = props.chatsReducer.newMessage;
 
-	const sendMessage = () => {
-		if (props.getState().newMessage)
-			props.store.dispatch(sendMessageCreator());
+	const onSendMessage = () => {
+		if (props.chatsReducer.newMessage) props.sendMessage();
 	};
 
-	const updateNewMessage = e => {
-		let text = e.target.value;
-		props.store.dispatch(updateNewMessageCreator(text));
+	const onUpdateNewMessage = e => {
+		const text = e.target.value;
+		props.updateNewMessage(text);
 	};
 
 	return (
@@ -39,10 +33,10 @@ function Chats(props) {
 				<textarea
 					className={s.newMessage}
 					name="newMessage"
-					onChange={updateNewMessage}
-					value={chatsReducer.newMessage}
+					onChange={onUpdateNewMessage}
+					value={newMessage}
 				/>
-				<button className={s.button} onClick={sendMessage}>
+				<button className={s.button} onClick={onSendMessage}>
 					<img
 						src="https://www.flaticon.com/svg/static/icons/svg/3652/3652532.svg"
 						alt="send"
