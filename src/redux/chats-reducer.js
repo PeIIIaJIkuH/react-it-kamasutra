@@ -1,7 +1,7 @@
 const SEND_MESSAGE = 'SEND-MESSAGE',
 	UPDATE_NEW_MESSAGE = 'UPDATE-NEW-MESSAGE';
 
-let initialState = {
+const initialState = {
 	chats: [
 		{
 			id: 1,
@@ -65,11 +65,11 @@ const chatsReducer = (state = initialState, action) => {
 	}
 };
 
-export const sendMessageCreator = () => ({
+export const sendMessageAC = () => ({
 	type: SEND_MESSAGE
 });
 
-export const updateNewMessageCreator = (text) => ({
+export const updateNewMessageAC = (text) => ({
 	type: UPDATE_NEW_MESSAGE,
 	text: text
 });

@@ -53,6 +53,17 @@ const Aside = () => {
 				<NavLink
 					className={s.navlink}
 					activeClassName={s.active}
+					to="/users"
+				>
+					<img
+						src="https://www.flaticon.com/svg/static/icons/svg/1077/1077063.svg"
+						alt="user"
+					/>
+					<span>Users</span>
+				</NavLink>
+				<NavLink
+					className={s.navlink}
+					activeClassName={s.active}
 					to="/settings"
 				>
 					<img

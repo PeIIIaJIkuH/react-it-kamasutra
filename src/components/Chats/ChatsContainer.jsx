@@ -1,8 +1,5 @@
 import { connect } from 'react-redux';
-import {
-	sendMessageCreator,
-	updateNewMessageCreator
-} from '../../redux/chats-reducer';
+import { sendMessageAC, updateNewMessageAC } from '../../redux/chats-reducer';
 import Chats from './Chats';
 
 const mapStateToProps = state => ({
@@ -11,10 +8,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
 	sendMessage: () => {
-		dispatch(sendMessageCreator());
+		dispatch(sendMessageAC());
 	},
 	updateNewMessage: text => {
-		dispatch(updateNewMessageCreator(text));
+		dispatch(updateNewMessageAC(text));
 	}
 });
 

@@ -4,6 +4,7 @@ import Aside from './components/Aside/Aside';
 import Profile from './components/Profile/Profile';
 import { Route } from 'react-router-dom';
 import ChatsContainer from './components/Chats/ChatsContainer';
+import UsersContainer from './components/Users/UsersContainer';
 
 function App(props) {
 	return (
@@ -15,6 +16,9 @@ function App(props) {
 			</Route>
 			<Route path='/profile'>
 				<Profile />
+			</Route>
+			<Route path='/users'>
+				<UsersContainer />
 			</Route>
 			<Route exact path='/'>
 				<Profile />

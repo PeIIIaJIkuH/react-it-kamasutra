@@ -1,7 +1,7 @@
 const ADD_POST = 'ADD-POST',
 	UPDATE_NEW_POST = 'UPDATE-NEW-POST';
 
-let initialState = {
+const initialState = {
 	info: [
 		'Date of birth: 23 February',
 		'City: Pavlodar',
@@ -35,11 +35,11 @@ const profileReducer = (state = initialState, action) => {
 	}
 };
 
-export const addPostCreator = () => ({
+export const addPostAC = () => ({
 	type: ADD_POST
 });
 
-export const updateNewPostCreator = (text) => ({
+export const updateNewPostAC = (text) => ({
 	type: UPDATE_NEW_POST,
 	text: text
 });
