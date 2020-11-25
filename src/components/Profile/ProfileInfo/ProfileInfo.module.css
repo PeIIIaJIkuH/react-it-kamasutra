@@ -16,7 +16,10 @@
 	border-radius: 50%;
 	position: absolute;
 	right: 20px;
-	bottom: 50px;
+	top: 145px;
+}
+
+.name {
 }
 
 .info {

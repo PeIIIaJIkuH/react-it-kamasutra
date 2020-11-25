@@ -1,65 +1,20 @@
+import {userAPI} from '../api/axios';
+
 const FOLLOW = 'FOLLOW',
 	UNFOLLOW = 'UNFOLLOW',
-	SET_USERS = 'SET-USERS';
+	SET_USERS = 'SET_USERS',
+	SET_CURRENT_PAGE = 'SET_CURRENT_PAGE',
+	SET_USERS_COUNT = 'SET_USERS_COUNT',
+	TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING',
+	TOGGLE_FOLLOWING_IN_PROGRESS = 'TOGGLE_FOLLOWING_IN_PROGRESS';
 
 const initialState = {
-	users: [
-		{
-			id: 1,
-			name: 'Maxat',
-			info: 'Black lives matter!',
-			location: { city: 'Kampala', country: 'Uganda' },
-			following: false,
-			avatar:
-				'https://i.pinimg.com/564x/2f/6b/ab/2f6bab56862dffdc6673dc39d71c38ce.jpg'
-		},
-		{
-			id: 2,
-			name: 'Zhanarys',
-			info: 'U r gay!',
-			location: { city: 'Abuja', country: 'Nigeria' },
-			following: false,
-			avatar:
-				'https://i.pinimg.com/564x/3e/e4/5d/3ee45d1a0a3d351b0440ca101760ebf8.jpg'
-		},
-		{
-			id: 3,
-			name: 'Danik',
-			info: 'Grannies are awesome!',
-			location: { city: 'Riyadh', country: 'Saudi Arabia' },
-			following: false,
-			avatar:
-				'https://i.pinimg.com/564x/37/4e/e5/374ee5d93665520d9302359713b4aa4d.jpg'
-		},
-		{
-			id: 4,
-			name: 'Eldar',
-			info: 'I am ukranian migrant, glory to Ukraine!',
-			location: { city: 'Kiev', country: 'Ukraine' },
-			following: false,
-			avatar:
-				'https://i.pinimg.com/564x/13/4f/d6/134fd601d3c020df86b8fa04ba8bfeb7.jpg'
-		},
-		{
-			id: 5,
-			name: 'Rus',
-			info: "It's not knife, it's just my third arm.",
-			location: { city: 'Semipalatinsk', country: 'Kazakhstan' },
-			following: false,
-			avatar:
-				'https://i.pinimg.com/564x/0b/75/b2/0b75b20980ccba97cab472738c33f852.jpg'
-		},
-		{
-			id: 6,
-			name: 'Aidyn',
-			info:
-				"No, please! I don't have any pot of gold. Do not fuck me, please!",
-			location: { city: 'Dublin', country: 'Ireland' },
-			following: false,
-			avatar:
-				'https://i.pinimg.com/564x/91/2c/e2/912ce2bec048c582e4b9112ad606459c.jpg'
-		}
-	]
+	users: [],
+	pageSize: 100,
+	usersCount: 0,
+	currentPage: 1,
+	isFetching: false,
+	followingInProgress: []
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -68,7 +23,7 @@ const usersReducer = (state = initialState, action) => {
 			return {
 				...state,
 				users: state.users.map((el) => {
-					if (el.id === action.id) return { ...el, following: true };
+					if (el.id === action.id) return {...el, followed: true};
 					return el;
 				})
 			};
@@ -76,30 +31,82 @@ const usersReducer = (state = initialState, action) => {
 			return {
 				...state,
 				users: state.users.map((el) => {
-					if (el.id === action.id) return { ...el, following: false };
+					if (el.id === action.id) return {...el, followed: false};
 					return el;
 				})
 			};
 		case SET_USERS:
-			return { ...state, users: [...state.users, ...action.users] };
+			return {...state, users: [...action.users]};
+		case SET_CURRENT_PAGE:
+			return {...state, currentPage: action.currentPage};
+		case SET_USERS_COUNT:
+			return {...state, usersCount: action.totalCount};
+		case TOGGLE_IS_FETCHING:
+			return {...state, isFetching: action.isFetching};
+		case TOGGLE_FOLLOWING_IN_PROGRESS:
+			return {
+				...state,
+				followingInProgress: action.followingInProgress
+					? [...state.followingInProgress, action.id]
+					: state.followingInProgress.filter((id) => id !== action.id)
+			};
 		default:
 			return state;
 	}
 };
 
-export const followAC = (id) => ({
-	type: FOLLOW,
-	id
+export const followSuccess = (id) => ({type: FOLLOW, id});
+export const unfollowSuccess = (id) => ({type: UNFOLLOW, id});
+export const setUsers = (users) => ({type: SET_USERS, users});
+export const setCurrentPage = (currentPage) => ({type: SET_CURRENT_PAGE, currentPage});
+export const setUsersCount = (totalCount) => ({type: SET_USERS_COUNT, totalCount});
+export const toggleIsFetching = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFetching});
+export const toggleFollowingInProgress = (id, followingInProgress) => ({
+	type: TOGGLE_FOLLOWING_IN_PROGRESS,
+	id,
+	followingInProgress
 });
 
-export const unfollowAC = (id) => ({
-	type: UNFOLLOW,
-	id
-});
+export const getUsers = (page, pageSize) => (dispatch) => {
+	dispatch(toggleIsFetching(true));
+	dispatch(setCurrentPage(page));
+	userAPI.getUsers(page, pageSize)
+		.then(data => {
+			dispatch(toggleIsFetching(false));
+			dispatch(setUsers(data.items));
+			dispatch(setUsersCount(data.totalCount));
+		});
+};
 
-export const setUsersAC = (users) => ({
-	type: SET_USERS,
-	users
-});
+export const onPageChange = (pageNumber, pageSize) => (dispatch) => {
+	dispatch(toggleIsFetching(false));
+	dispatch(setCurrentPage(pageNumber));
+	userAPI.getUsers(pageNumber, pageSize)
+		.then(data => {
+			dispatch(toggleIsFetching(false));
+			dispatch(setUsers(data.items));
+		});
+};
+
+export const follow = (id) => (dispatch) => {
+	dispatch(toggleFollowingInProgress(id, true));
+	userAPI.follow(id).then(data => {
+		if (data.resultCode === 0) {
+			dispatch(followSuccess(id));
+		}
+		dispatch(toggleFollowingInProgress(id, false));
+	});
+};
+
+export const unfollow = (id) => (dispatch) => {
+	dispatch(toggleFollowingInProgress(id, true));
+	userAPI.unfollow(id).then(data => {
+		if (data.resultCode === 0) {
+			dispatch(unfollowSuccess(id));
+		}
+		dispatch(toggleFollowingInProgress(id, false));
+	});
+	dispatch(follow(id));
+};
 
 export default usersReducer;

@@ -1,23 +1,42 @@
-import { connect } from 'react-redux';
-import { followAC, setUsersAC, unfollowAC } from '../../redux/users-reducer';
+import {connect} from 'react-redux';
+import {
+	follow,
+	getUsers,
+	onPageChange,
+	setCurrentPage,
+	toggleFollowingInProgress,
+	unfollow
+} from '../../redux/users-reducer';
+import React from 'react';
 import Users from './Users';
+import Preloader from '../common/Preloader/Preloader';
+import {getUsersReducer} from '../../redux/selectors';
+
+class UsersContainer extends React.Component {
+	componentDidMount = () => {
+		this.props.getUsers(this.props.usersReducer.currentPage, this.props.usersReducer.pageSize);
+	};
+
+	onPageChange = (pageNumber) => {
+		this.props.onPageChange(pageNumber, this.props.usersReducer.pageSize);
+	};
+
+	render() {
+		return (
+			<React.Fragment>
+				{this.props.usersReducer.isFetching && <Preloader/>}
+				<Users usersReducer={this.props.usersReducer} follow={this.props.follow}
+				       unfollow={this.props.unfollow} onPageChange={this.onPageChange}
+				/>
+			</React.Fragment>
+		);
+	}
+}
 
 const mapStateToProps = state => ({
-	usersReducer: state.usersReducer
+	usersReducer: getUsersReducer(state)
 });
 
-const mapDispatchToProps = dispatch => ({
-	follow: id => {
-		dispatch(followAC(id));
-	},
-	unfollow: id => {
-		dispatch(unfollowAC(id));
-	},
-	setUsers: users => {
-		dispatch(setUsersAC(users));
-	}
-});
+const toDispatch = {follow, unfollow, setCurrentPage, toggleFollowingInProgress, getUsers, onPageChange};
 
-const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(Users);
-
-export default UsersContainer;
+export default connect(mapStateToProps, toDispatch)(UsersContainer);

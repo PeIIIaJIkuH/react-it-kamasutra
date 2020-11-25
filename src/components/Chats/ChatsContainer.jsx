@@ -1,20 +1,16 @@
-import { connect } from 'react-redux';
-import { sendMessageAC, updateNewMessageAC } from '../../redux/chats-reducer';
+import {connect} from 'react-redux';
+import {sendMessage} from '../../redux/chats-reducer';
+import {withAuthRedirect} from '../../hoc/WithAuthRedirect';
 import Chats from './Chats';
+import {compose} from 'redux';
+import {getChatsReducer} from '../../redux/selectors';
 
 const mapStateToProps = state => ({
-	chatsReducer: state.chatsReducer
+	chatsReducer: getChatsReducer(state)
 });
 
-const mapDispatchToProps = dispatch => ({
-	sendMessage: () => {
-		dispatch(sendMessageAC());
-	},
-	updateNewMessage: text => {
-		dispatch(updateNewMessageAC(text));
-	}
-});
+const toDispatch = {
+	sendMessage
+};
 
-const ChatsContainer = connect(mapStateToProps, mapDispatchToProps)(Chats);
-
-export default ChatsContainer;
+export default compose(connect(mapStateToProps, toDispatch), withAuthRedirect)(Chats);

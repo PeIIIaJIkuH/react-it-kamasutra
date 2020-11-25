@@ -1,43 +1,25 @@
 import React from 'react';
 import Post from './Post/Post';
 import s from './Posts.module.css';
+import AddPostForm from './AddPostForm';
 
-function Posts(props) {
-	const posts = props.profileReducer.posts.map(el => <Post text={el.text} />);
+const Posts = (props) => {
+	const posts = props.profileReducer.posts.map(el => <Post text={el.text} key={el.id + 1}/>);
 
-	const onAddPost = () => {
-		if (props.profileReducer.newPost) props.addPost();
-	};
-
-	const onUpdateNewPost = e => {
-		const text = e.target.value;
-		props.updateNewPost(text);
+	const onSubmit = (formData) => {
+		console.log(formData);
+		props.addPost(formData.newPost);
 	};
 
 	return (
 		<div className={s.posts}>
-			<h3 className="header">New Post</h3>
-			<div className={s.addPost}>
-				<textarea
-					className={s.newPost}
-					name="newPost"
-					value={props.profileReducer.newPost}
-					onChange={onUpdateNewPost}
-				/>
-				<div className={s.wrapper}>
-					<button className={s.button} onClick={onAddPost}>
-						<img
-							src="https://www.flaticon.com/svg/static/icons/svg/1828/1828819.svg"
-							alt="add"
-						/>
-					</button>
-				</div>
-			</div>
-			<div className="postItems">
+			<h3 className='header'>New Post</h3>
+			<AddPostForm onSubmit={onSubmit}/>
+			<div className='postItems'>
 				{posts}
 			</div>
 		</div>
 	);
-}
+};
 
 export default Posts;

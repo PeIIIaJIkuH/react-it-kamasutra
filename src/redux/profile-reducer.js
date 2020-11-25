@@ -1,19 +1,17 @@
-const ADD_POST = 'ADD-POST',
-	UPDATE_NEW_POST = 'UPDATE-NEW-POST';
+import {profileAPI} from '../api/axios';
+
+const ADD_POST = 'ADD_POST',
+	SET_PROFILE = 'SET_PROFILE',
+	SET_STATUS = 'SET_STATUS';
 
 const initialState = {
-	info: [
-		'Date of birth: 23 February',
-		'City: Pavlodar',
-		'Education: NU',
-		'Website: fnfn.net'
-	],
 	posts: [
-		{ id: 1, text: 'Text 1' },
-		{ id: 2, text: 'Text 2' },
-		{ id: 3, text: 'Text 3' }
+		{id: 1, text: 'Text 1'},
+		{id: 2, text: 'Text 2'},
+		{id: 3, text: 'Text 3'}
 	],
-	newPost: ''
+	profile: null,
+	status: ''
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -21,27 +19,43 @@ const profileReducer = (state = initialState, action) => {
 		case ADD_POST:
 			const post = {
 				id: state.posts.length,
-				text: state.newPost
+				text: action.newPost
 			};
 			return {
 				...state,
-				posts: [...state.posts, post],
-				newPost: ''
+				posts: [...state.posts, post]
 			};
-		case UPDATE_NEW_POST:
-			return { ...state, newPost: action.text };
+		case SET_PROFILE:
+			return {...state, profile: action.profile};
+		case SET_STATUS:
+			return {...state, status: action.status};
 		default:
 			return state;
 	}
 };
 
-export const addPostAC = () => ({
-	type: ADD_POST
-});
+export const addPost = (newPost) => ({type: ADD_POST, newPost});
+export const setProfile = (profile) => ({type: SET_PROFILE, profile});
+export const setStatus = (status) => ({type: SET_STATUS, status});
 
-export const updateNewPostAC = (text) => ({
-	type: UPDATE_NEW_POST,
-	text: text
-});
+export const getProfile = (id) => (dispatch) => {
+	profileAPI.getProfile(id).then(data => {
+		dispatch(setProfile(data));
+	});
+};
+
+export const getStatus = (id) => (dispatch) => {
+	profileAPI.getStatus(id).then(data => {
+		dispatch(setStatus(data));
+	});
+};
+
+export const updateStatus = (status) => (dispatch) => {
+	profileAPI.updateStatus(status).then(data => {
+		if (data.resultCode === 0) {
+			dispatch(setStatus(status));
+		}
+	});
+};
 
 export default profileReducer;

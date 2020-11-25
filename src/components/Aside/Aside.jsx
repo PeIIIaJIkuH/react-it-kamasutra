@@ -1,20 +1,23 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import s from './Aside.module.css';
+import profile from '../../assets/img/aside/profile.svg';
+import chats from '../../assets/img/aside/chats.svg';
+import news from '../../assets/img/aside/news.svg';
+import music from '../../assets/img/aside/music.svg';
+import users from '../../assets/img/aside/users.svg';
+import settings from '../../assets/img/aside/settings.svg';
 
 const Aside = () => {
 	return (
 		<aside className={s.aside}>
-			<nav className="nav">
+			<nav className={s.nav}>
 				<NavLink
 					className={s.navlink}
 					activeClassName={s.active}
 					to="/profile"
 				>
-					<img
-						src="https://www.flaticon.com/svg/static/icons/svg/1946/1946488.svg"
-						alt="house"
-					/>
+					<img src={profile} alt="house" />
 					<span>Profile</span>
 				</NavLink>
 				<NavLink
@@ -22,10 +25,7 @@ const Aside = () => {
 					activeClassName={s.active}
 					to="/chats"
 				>
-					<img
-						src="https://www.flaticon.com/svg/static/icons/svg/589/589708.svg"
-						alt="chat"
-					/>
+					<img src={chats} alt="chat" />
 					<span>Chats</span>
 				</NavLink>
 				<NavLink
@@ -33,10 +33,7 @@ const Aside = () => {
 					activeClassName={s.active}
 					to="/news"
 				>
-					<img
-						src="https://www.flaticon.com/svg/static/icons/svg/887/887123.svg"
-						alt="news"
-					/>
+					<img src={news} alt="news" />
 					<span>News</span>
 				</NavLink>
 				<NavLink
@@ -44,10 +41,7 @@ const Aside = () => {
 					activeClassName={s.active}
 					to="/music"
 				>
-					<img
-						src="https://www.flaticon.com/svg/static/icons/svg/876/876766.svg"
-						alt="music"
-					/>
+					<img src={music} alt="music" />
 					<span>Music</span>
 				</NavLink>
 				<NavLink
@@ -55,10 +49,7 @@ const Aside = () => {
 					activeClassName={s.active}
 					to="/users"
 				>
-					<img
-						src="https://www.flaticon.com/svg/static/icons/svg/1077/1077063.svg"
-						alt="user"
-					/>
+					<img src={users} alt="user" />
 					<span>Users</span>
 				</NavLink>
 				<NavLink
@@ -66,10 +57,7 @@ const Aside = () => {
 					activeClassName={s.active}
 					to="/settings"
 				>
-					<img
-						src="https://www.flaticon.com/svg/static/icons/svg/2099/2099058.svg"
-						alt="settings"
-					/>
+					<img src={settings} alt="settings" />
 					<span>Settings</span>
 				</NavLink>
 			</nav>

@@ -1,5 +1,10 @@
 .aside {
 	grid-area: aside;
+	position: relative;
+}
+
+.nav {
+	position: sticky;
 }
 
 .navlink {

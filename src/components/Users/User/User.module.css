@@ -9,8 +9,7 @@
 .user img {
 	width: 50px;
 	height: 50px;
-	margin-bottom: 10px;
-	border-radius: 5px;
+	border-radius: 50%;
 }
 
 .user button {
@@ -25,12 +24,13 @@
 	box-shadow: none;
 }
 
-.user button:hover {
-	transform: scale(1.1);
-}
-
 .user button:active {
 	transform: scale(0.9);
+}
+
+.user button:disabled {
+	background: gray;
+	cursor: default;
 }
 
 .followed {
@@ -61,6 +61,8 @@
 	grid-area: name;
 	font-weight: 600;
 	font-size: 20px;
+	text-decoration: none;
+	color: black;
 }
 
 .info {
@@ -77,4 +79,8 @@
 .country {
 	grid-area: country;
 	text-align: right;
+}
+
+.navlink {
+	margin-bottom: 10px;
 }

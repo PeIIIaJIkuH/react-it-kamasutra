@@ -1,35 +1,20 @@
 import React from 'react';
 import s from './ProfileInfo.module.css';
+import background from '../../../assets/img/profile/background.jpg';
+import avatar from '../../../assets/img/profile/avatar.png';
+import Preloader from '../../common/Preloader/Preloader';
+import ProfileStatus from './ProfileStatus';
 
-function ProfileInfo(props) {
-	const info = [
-		'Date of birth: 23 February',
-		'City: Pavlodar',
-		'Education: NU',
-		'Website: fnfn.net'
-	];
+const ProfileInfo = (props) => {
+	if (!props.profileReducer.profile) return <Preloader/>;
 	return (
 		<div className={s.profileInfo}>
-			<img
-				className={s.background}
-				src="https://wallpaperaccess.com/full/48756.jpg"
-				alt="background"
-			/>
-			<img
-				className={s.avatar}
-				src="https://i.pinimg.com/originals/8b/6e/c6/8b6ec60427f9b17c1d9aaf4c415babe3.png"
-				alt="avatar"
-			/>
-			<h2 className="name">PeIIIaJIkuH</h2>
-			<div className={s.info}>
-				{info.map(el =>
-					<div className="item">
-						{el}
-					</div>
-				)}
-			</div>
+			<img className={s.background} src={background} alt='background'/>
+			<img className={s.avatar} src={props.profileReducer.profile.photos.large || avatar} alt='avatar'/>
+			<h2 className={s.name}>{props.profileReducer.profile.fullName}</h2>
+			<ProfileStatus status={props.profileReducer.status} updateStatus={props.updateStatus}/>
 		</div>
 	);
-}
+};
 
 export default ProfileInfo;

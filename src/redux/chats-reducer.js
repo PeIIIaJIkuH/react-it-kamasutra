@@ -1,5 +1,4 @@
-const SEND_MESSAGE = 'SEND-MESSAGE',
-	UPDATE_NEW_MESSAGE = 'UPDATE-NEW-MESSAGE';
+const SEND_MESSAGE = 'SEND_MESSAGE';
 
 const initialState = {
 	chats: [
@@ -46,8 +45,7 @@ const initialState = {
 			messages: ['Aidyn 1', 'Aidyn 2', 'Aidyn 3']
 		}
 	],
-	messages: ['Text 1', 'Text 2', 'Text 3', 'Text 4'],
-	newMessage: ''
+	messages: ['Text 1', 'Text 2', 'Text 3', 'Text 4']
 };
 
 const chatsReducer = (state = initialState, action) => {
@@ -55,23 +53,13 @@ const chatsReducer = (state = initialState, action) => {
 		case SEND_MESSAGE:
 			return {
 				...state,
-				messages: [...state.messages, state.newMessage],
-				newMessage: ''
+				messages: [...state.messages, action.newMessage]
 			};
-		case UPDATE_NEW_MESSAGE:
-			return { ...state, newMessage: action.text };
 		default:
 			return state;
 	}
 };
 
-export const sendMessageAC = () => ({
-	type: SEND_MESSAGE
-});
-
-export const updateNewMessageAC = (text) => ({
-	type: UPDATE_NEW_MESSAGE,
-	text: text
-});
+export const sendMessage = (newMessage) => ({type: SEND_MESSAGE, newMessage});
 
 export default chatsReducer;

@@ -2,49 +2,26 @@ import React from 'react';
 import Message from './Message/Message';
 import User from './User/User';
 import s from './Chats.module.css';
+import {Redirect} from 'react-router-dom';
+import AddMessageForm from './AddMessageForm';
 
-function Chats(props) {
-	const users = props.chatsReducer.chats.map(el =>
-		<User name={el.name} id={el.id} src={el.src} />
-	);
-	const messages = props.chatsReducer.messages.map(el =>
-		<Message text={el} />
-	);
-	const newMessage = props.chatsReducer.newMessage;
+const Chats = (props) => {
+	const users = props.chatsReducer.chats.map(el => <User name={el.name} id={el.id} src={el.src} key={el.id}/>);
+	const messages = props.chatsReducer.messages.map((el, i) => <Message text={el} key={i}/>);
 
-	const onSendMessage = () => {
-		if (props.chatsReducer.newMessage) props.sendMessage();
-	};
+	if (!props.isAuth) return <Redirect to='/login'/>;
 
-	const onUpdateNewMessage = e => {
-		const text = e.target.value;
-		props.updateNewMessage(text);
+	const onSubmit = (formData) => {
+		props.sendMessage(formData.newMessage);
 	};
 
 	return (
 		<main className={s.chats}>
-			<div className={s.users}>
-				{users}
-			</div>
-			<div className={s.chat}>
-				{messages}
-			</div>
-			<div className={s.addMessage}>
-				<textarea
-					className={s.newMessage}
-					name="newMessage"
-					onChange={onUpdateNewMessage}
-					value={newMessage}
-				/>
-				<button className={s.button} onClick={onSendMessage}>
-					<img
-						src="https://www.flaticon.com/svg/static/icons/svg/3652/3652532.svg"
-						alt="send"
-					/>
-				</button>
-			</div>
+			<div className={s.users}>{users}</div>
+			<div className={s.chat}>{messages}</div>
+			<AddMessageForm onSubmit={onSubmit}/>
 		</main>
 	);
-}
+};
 
 export default Chats;
